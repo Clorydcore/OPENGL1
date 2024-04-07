@@ -4,11 +4,8 @@ float x = 0.0f, y = 0.0f;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
  
-void processInput(GLFWwindow* window, GLint location)
+void processInput(GLFWwindow* window, GLint location, mat4 trans)
 {
-    vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-    mat4 trans;
-    vec = trans * vec;
    
     
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -20,7 +17,7 @@ void processInput(GLFWwindow* window, GLint location)
 
         //Beep(1400, 300);
         
-        trans = translate(trans, vec3(0.0f, 0.0f, 0.0f)); 
+        trans = translate(trans, vec3(0.0f + 0.04f, 0.0f, 0.0f)); 
         /*glUniform2f(location,vec.x += 0.04f, y);*/
        
     }
@@ -101,6 +98,9 @@ int main()
 {
     Cord cord;
 
+    vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+    mat4 trans;
+    vec = trans * vec;
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -245,7 +245,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
        
-        processInput(window,location);
+        processInput(window,location, tras);
 
        
         glClearColor(1.0f, 0.0f, 0.5f, 0.5f);
