@@ -2,11 +2,13 @@
 
 float x = 0.0f, y = 0.0f;
 
+
+    vec3 pos;
+   
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
  
 void processInput(GLFWwindow* window, GLint location, mat4 trans)
 {
-   
     
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -17,9 +19,9 @@ void processInput(GLFWwindow* window, GLint location, mat4 trans)
 
         //Beep(1400, 300);
         
-        trans = translate(trans, vec3(0.0f + 0.04f, 0.0f, 0.0f)); 
+        trans = translate(trans, vec3(pos.x, 0.0f, 0.0f));
         /*glUniform2f(location,vec.x += 0.04f, y);*/
-       
+        pos.x += 0.04;
     }
 
 
@@ -28,23 +30,23 @@ void processInput(GLFWwindow* window, GLint location, mat4 trans)
 
         /*  Beep(1400, 300);*/
 
-        translate(mat4(1.0f), vec3(x, y, 0.0f));
-        x += 0.04f;
+        trans = translate(trans, vec3(x, y, 0.0f));
+        pos.x += 0.04f;
   /*      glUniform2f(location, x += 0.04f, y);*/
     }
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
-        translate(mat4(1.0f), vec3(x, y, 0.0f));
-        x -= 0.04f;
+        /*translate(mat4(1.0f), vec3(x, y, 0.0f));
+        x -= 0.04f;*/
      /*   glUniform2f(location, x -= 0.04f, y);*/
 
     }
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        translate(mat4(1.0f), vec3(x, y, 0.0f));
-        x -= 0.04f;
+    /*    translate(mat4(1.0f), vec3(x, y, 0.0f));
+        x -= 0.04f;*/
        /* glUniform2f(location, x -= 0.04f, y);*/
 
     }
@@ -79,7 +81,7 @@ const char* vertexShaderSource = "#version 460 core\n"
 
 //"   gl_Position =  vec4(aPos.x + translation.x ,aPos.y + translation.y ,aPos.z ,1.0);\n"
 "   gl_Position = transform * vec4(aPos,1.0f);\n"
-"   TexCoord = aTexCoord;\n"
+"   TexCoord = vec2(aTexCoord.x, aTexCoord.y);\n"
 "}\0";
 
 const char* fragmentShaderSource = "#version 460 core\n"
@@ -98,8 +100,8 @@ int main()
 {
     Cord cord;
 
-    vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
     mat4 trans;
+    vec4 vec(0.0f,0.0f,0.0f,1.0f);
     vec = trans * vec;
 
     glfwInit();
@@ -245,7 +247,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
        
-        processInput(window,location, tras);
+        processInput(window,location, trans);
 
        
         glClearColor(1.0f, 0.0f, 0.5f, 0.5f);
